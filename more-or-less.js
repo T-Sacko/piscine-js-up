@@ -10,6 +10,6 @@ function add(x, y){
     x+y
 }
 
-function less(x,y){
+function sub(x,y){
     x-y
 }
