@@ -1,4 +1,4 @@
 const str = 'h';
-const num = d;
+const num = 9;
 const bool = false;
 const undef = undefined;
