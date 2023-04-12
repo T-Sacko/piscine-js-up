@@ -7,6 +7,6 @@ function last(g){
 }
 
 function kiss(g){
-    const x = [g[0],g[g.length -1]]
+    const x = [g[g.length -1],g[0]]
     return x;
 }
