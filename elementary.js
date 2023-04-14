@@ -1,13 +1,26 @@
 // Function to mimic the * operator
 function multiply(a, b) {
-    // Base case: when b is 0, return 0
-    if (b === 0) {
+    // Base case: when either a or b is 0, return 0
+    if (a === 0 || b === 0) {
       return 0;
     }
-    
-    // Recursive case: add a to the result of multiplying (a, b-1)
-    return a + multiply(a, b - 1);
+  
+    // Recursive case:
+    // If both a and b are positive, add a to the result of multiplying (a, b-1)
+    // If both a and b are negative, add the negation of a to the result of multiplying (-a, -b-1)
+    // If either a or b is negative, add the result of multiplying (-a, b-1) or (a, -b-1) respectively
+    if (a > 0 && b > 0) {
+      return a + multiply(a, b - 1);
+    } else if (a < 0 && b < 0) {
+      return -a + multiply(-a, -b - 1);
+    } else if (a < 0) {
+      return multiply(-a, b - 1);
+    } else {
+      return multiply(a, -b - 1);
+    }
   }
+  
+  
   
   // Function to mimic the / operator for integer division
   function divide(a, b) {
