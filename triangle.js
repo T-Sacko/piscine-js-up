@@ -1,8 +1,7 @@
-function get(src, path) {
-    return path.split(".").reduce(function (obj, key) {
-      if (obj === undefined) {
-        return undefined;
-      }
-      return obj[key];
-    }, src);
+function triangle(char, n) {
+    let str = "";
+    for (var i = 1; i <= n; i++) {
+      str = str + char.repeat(i) + "\n";
+    }
+    return str.slice(0, -1);
   }
