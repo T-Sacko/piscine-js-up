@@ -1,46 +1,68 @@
-// Function to mimic the * operator
 function multiply(a, b) {
-    // Base case: when either a or b is 0, return 0
-    if (a === 0 || b === 0) {
-      return 0;
-    }
-  
-    // Recursive case:
-    // If both a and b are positive, add a to the result of multiplying (a, b-1)
-    // If both a and b are negative, add the negation of a to the result of multiplying (-a, -b-1)
-    // If either a or b is negative, add the result of multiplying (-a, b-1) or (a, -b-1) respectively
-    if (a > 0 && b > 0) {
-      return a + multiply(a, b - 1);
-    } else if (a < 0 && b < 0) {
-      return -a + multiply(-a, -b - 1);
-    } else if (a < 0) {
-      return multiply(-a, b - 1);
+    let res;
+    if (a == 0 || b == 0) {
+      res = 0;
     } else {
-      return multiply(a, -b - 1);
+      if (b < 0) {
+        a = -a;
+        b = -b;
+      }
+      res = a + multiply(a, b - 1);
     }
+    return res;
+  
   }
   
-  
-  
-  // Function to mimic the / operator for integer division
   function divide(a, b) {
-    // Base case: when a is less than b, return 0
-    if (a < b) {
-      return 0;
+    let res;
+    if (a === 0) {
+      res = 0;
+    } else if (b === 1) {
+      res = a;
+    } else if (b === -1) {
+      res = -a;
+    } else if (b === 0) {
+      return Infinity;
+    } else {
+      let neg;
+      if (a < 0) {
+        a = Math.abs(a);
+        neg = true;
+      }
+      if (b < 0) {
+        b = Math.abs(b);
+        neg ? (neg = false) : (neg = true);
+      }
+      let count = 0;
+      while (a >= b) {
+        a -= b;
+        count++;
+      }
+      res = neg ? -count : count;
     }
-    
-    // Recursive case: add 1 to the result of dividing (a-b) by b
-    return 1 + divide(a - b, b);
+    return res;
   }
-  
-  // Function to mimic the % operator
   function modulo(a, b) {
-    // Base case: when a is less than b, return a
-    if (a < b) {
-      return a;
+    let flag = false;
+    if (a < 0) {
+      a = -a;
+      flag = true;
     }
-    
-    // Recursive case: find the modulo of (a-b) by b
-    return modulo(a - b, b);
+    if (b < 0) {
+      b = -b;
+    }
+    let answer = a;
+    let divisor = b;
+    let count = 1;
+    while (b < answer) {
+      answer = answer - divisor;
+      count++;
+    }
+    if (flag) {
+      answer = -answer;
+    }
+    return answer;
+    //   q = parseInt(a / b); //finding quotient (integer part only)
+    //   p = q * b; //finding product
+    //   return a - p; //finding modulus
   }
-  
