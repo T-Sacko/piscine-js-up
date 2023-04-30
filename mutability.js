@@ -6,7 +6,8 @@ const clone2= {
   ...person,
 }
 
-samePerson = person
+const samePerson = person
 
-person.age ++
+person.age++
 person.country = 'FR'
+
