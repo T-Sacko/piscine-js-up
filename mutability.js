@@ -6,7 +6,5 @@ const clone2= {
   ...person,
 }
 
+samePerson = person
 
-
-
-  console.log(person)
