@@ -1,15 +1,15 @@
 function more(x) {
-   x++;
+   return x+1;
 }
 
 function less(x) {
-    x--;
+   return x-1;
 }
 
 function add(x, y) {
-    x+=y;
+   return x+y;
 }
 
 function sub(x,y) {
-   x-=y;
+   return x-y;
 }
