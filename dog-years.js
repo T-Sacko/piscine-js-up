@@ -1,4 +1,4 @@
-function dog_years(plan, age) {
+function dogYears(plan, age) {
 
   let secs = 31557600
   let mult = 7
