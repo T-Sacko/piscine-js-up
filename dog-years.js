@@ -1,4 +1,9 @@
-const planets = {
+function dog_years(plan, age) {
+
+  let secs = 31557600
+  let mult = 7
+
+  const periods = {
     earth: 1,
     mercury: 0.2408467,
     venus: 0.61519726,
@@ -7,14 +12,17 @@ const planets = {
     saturn: 29.447498,
     uranus: 84.016846,
     neptune: 164.79132,
-  };
-  //year = seconds of a year
-  function dogYears(planet, age) {
-    age = age / 31557600;
-    //array of planets
-    let array = planets[planet];
-    // age divided by array times 7
-    age = (age / array) * 7;
-    //round answer age
-    return Math.round(age * 100) / 100;
   }
+
+  const eyears = age/secs
+  let planet=plan.toLowerCase()
+  let planyears = eyears/periods[planet];
+  planyears=planyears*mult
+
+  return parseFloat(planyears.toFixed(2));
+
+  
+}
+
+const yhh = dog_years('earth',1000000000)
+console.log(yhh)
