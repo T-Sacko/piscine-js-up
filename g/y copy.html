@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Character Stats</title>
+  <style>
+    th {
+      cursor: pointer;
+    }
+    th.sort-asc:after {
+      content: ' ▲';
+    }
+    th.sort-desc:after {
+      content: ' ▼';
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <label for="page-size-select">Page size:</label>
+    <select id="page-size-select">
+      <option value="10">10</option>
+      <option value="20" selected>20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+      <option value="all">All</option>
+    </select>
+    <input type="search" id="search-input" placeholder="Search by name">
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th data-column="name">Name</th>
+        <th data-column="fullName">Full Name</th>
+        <th data-column="race">Race</th>
+        <th data-column="gender">Gender</th>
+        <th data-column="weight">Weight</th>
+        <th data-column="height">Height</th>
+        <th data-column="placeOfBirth">Place of Birth</th>
+        <th data-column="alignment">Alignment</th>
+        <th data-column="intelligence">Intelligence</th>
+        <th data-column="strength">Strength</th>
+        <th data-column="speed">Speed</th>
+        <th data-column="durability">Durability</th>
+        <th data-column="power">Power</th>
+        <th data-column="combat">Combat</th>
+      </tr>
+    </thead>
+    <tbody id="characters-table">
+    </tbody>
+  </table>
+  <div id="pagination"></div>
+  <script>
+
+const charactersPerPage = 20;
+let currentPage = 1;
+let currentPageSize = charactersPerPage;
+let currentSearchTerm = '';
+let currentSortColumn = 'name';
+let currentSortOrder = 'asc';
+
+// Load the JSON file
+fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
+  .then(response => response.json())
+  .then(characters => {
+    const tableBody = document.getElementById('characters-table');
+    const paginationDiv = document.getElementById('pagination');
+    
+    const displayCharacters = () => {
+      // Filter characters by search term
+      let filteredCharacters = characters.filter(character => character.name.toLowerCase().includes(currentSearchTerm.toLowerCase()));
+      
+      // Sort characters by current sort column and order
+      if (currentSortColumn === 'name' || currentSortColumn === 'fullName' || currentSortColumn === 'race' || currentSortColumn === 'gender' || currentSortColumn === 'placeOfBirth' || currentSortColumn === 'alignment') {
+        filteredCharacters.sort((a, b) => {
+          let nameA = a[currentSortColumn].toLowerCase();
+          let nameB = b[currentSortColumn].toLowerCase();
+          if (nameA < nameB) {
+            return currentSortOrder === 'asc' ? -1 : 1;
+          }
+          if (nameA > nameB) {
+            return currentSortOrder === 'asc' ? 1 : -1;
+          }
+          return 0;
+        });
+      } else {
+        filteredCharacters.sort((a, b) => {
+          let valueA = parseInt(a[currentSortColumn]);
+          let valueB = parseInt(b[currentSortColumn]);
+          if (isNaN(valueA)) {
+            return 1;
+          }
+          if (isNaN(valueB)) {
+            return -1;
+          }
+          if (valueA < valueB) {
+            return currentSortOrder === 'asc' ? -1 : 1;
+          }
+          if (valueA > valueB) {
+            return currentSortOrder === 'asc' ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+      
+      // Calculate pagination variables
+      const totalPages = Math.ceil(filteredCharacters.length / currentPageSize);
+      const startIndex = (currentPage - 1) * currentPageSize;
+      const endIndex = startIndex + currentPageSize;
+      const charactersToDisplay = filteredCharacters.slice(startIndex, endIndex);
+      
+      // Render table body
+      tableBody.innerHTML = '';
+      charactersToDisplay.forEach(character => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+		<td><img src="${character.images.md}" width="80"></td>
+          <td>${character.name}</td>
+          <td>${character.fullName}</td>
+          <td>${character.appearance.race || '-'}</td>
+          <td>${character.appearance.gender || '-'}</td>
+          <td>${character.appearance.weight[1] || '-'}</td>
+          <td>${character.appearance.height[1] || '-'}</td>
+          <td>${character.biography.placeOfBirth || '-'}</td>
+          <td>${character.biography.alignment || '-'}</td>
+          <td>${character.powerstats.intelligence || '-'}</td>
+          <td>${character.powerstats.strength || '-'}</td>
+          <td>${character.powerstats.speed || '-'}</td>
+          <td>${character.powerstats.durability || '-'}</td>
+          <td>${character.powerstats.power || '-'}</td>
+          <td>${character.powerstats.combat || '-'}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+      
+      // Render pagination
+      paginationDiv.innerHTML = '';
+	  if (totalPages > 1) {
+    const paginationList = document.createElement('ul');
+    paginationList.classList.add('pagination-list');
+    for (let i = 1; i <= totalPages; i++) {
+        const paginationItem = document.createElement('li');
+        paginationItem.classList.add('pagination-item');
+        const paginationLink = document.createElement('a');
+        paginationLink.classList.add('pagination-link');
+        paginationLink.href = '#';
+        paginationLink.textContent = i;
+        paginationItem.appendChild(paginationLink);
+        paginationList.appendChild(paginationItem);
+    }
+    paginationContainer.appendChild(paginationList);
+}
+
+document.body.appendChild(paginationContainer);}})

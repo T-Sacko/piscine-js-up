@@ -1,0 +1,110 @@
+<html>
+<head>
+	<title>Character Stats</title>
+	<style>
+		table {
+		  border-collapse: collapse;
+		}
+
+		table, th, td {
+		  border: 1px solid black;
+		}
+
+		th, td {
+		  padding: 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Character Stats</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Icon</th>
+				<th>Full Name</th>
+				<th>Name</th>
+				<th>Race</th>
+				<th>Gender</th>
+				<th>Weight</th>
+				<th>Height</th>
+				<th>Place of Birth</th>
+				<th>Alignment</th>
+				<th>Intelligence</th>
+				<th>Strength</th>
+				<th>Speed</th>
+				<th>Durability</th>
+				<th>Power</th>
+				<th>Combat</th>
+			</tr>
+		</thead>
+		<tbody id="character-table">
+		</tbody>
+	</table>
+
+	<script>
+		const characterUrl = 'https://cdn.rawgit.com/akabab/superhero-api/0.2.0/api/id/1.json';
+		
+		fetch(characterUrl)
+		  .then(response => response.json())
+		  .then(data => {
+		    const characterTable = document.getElementById('character-table');
+		    
+		    const row = document.createElement('tr');
+		    
+		    const iconCell = document.createElement('td');
+		    const icon = document.createElement('img');
+		    icon.src = data.images.lg;
+		    icon.width = '80';
+		    iconCell.appendChild(icon);
+		    row.appendChild(iconCell);
+		    
+		    const fullNameCell = document.createElement('td');
+		    fullNameCell.textContent = data.biography.fullName;
+		    row.appendChild(fullNameCell);
+		    
+		    const nameCell = document.createElement('td');
+		    nameCell.textContent = data.name;
+		    row.appendChild(nameCell);
+		    
+		    const raceCell = document.createElement('td');
+		    raceCell.textContent = data.appearance.race;
+		    row.appendChild(raceCell);
+		    
+		    const genderCell = document.createElement('td');
+		    genderCell.textContent = data.appearance.gender;
+		    row.appendChild(genderCell);
+		    
+		    const weightCell = document.createElement('td');
+		    weightCell.textContent = data.appearance.weight[0];
+		    row.appendChild(weightCell);
+		    
+		    const heightCell = document.createElement('td');
+		    heightCell.textContent = data.appearance.height[0];
+		    row.appendChild(heightCell);
+		    
+		    const placeOfBirthCell = document.createElement('td');
+		    placeOfBirthCell.textContent = data.biography.placeOfBirth;
+		    row.appendChild(placeOfBirthCell);
+		    
+		    const alignmentCell = document.createElement('td');
+		    alignmentCell.textContent = data.biography.alignment;
+		    row.appendChild(alignmentCell);
+		    
+		    const intelligenceCell = document.createElement('td');
+		    intelligenceCell.textContent = data.powerstats.intelligence;
+		    row.appendChild(intelligenceCell);
+		    
+		    const strengthCell = document.createElement('td');
+		    strengthCell.textContent = data.powerstats.strength;
+		    row.appendChild(strengthCell);
+		    
+		    const speedCell = document.createElement('td');
+		    speedCell.textContent = data.powerstats.speed;
+		    row.appendChild(speedCell);
+		    
+		    const durabilityCell = document.createElement('td');
+		    durabilityCell.textContent = data.powerstats.durability;
+		    row.appendChild(durabilityCell);
+		    
+		    const powerCell = document.createElement('td');
+		    powerCell.textContent = data.powerstats.power;
