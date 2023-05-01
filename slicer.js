@@ -20,3 +20,5 @@ function slice(input, start, end) {
 
   return result;
 }
+
+console.log((() => slice('abcdef', 2))());
