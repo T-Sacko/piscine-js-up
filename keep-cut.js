@@ -13,9 +13,10 @@ function cutFirst(str) {
   function keepLast(str) {
     return str.slice(-2);
   }
-  // keepFirstLast returns the first 2 characters, and the last 2 characters.
   function keepFirstLast(str) {
-    
+    if (str.length <= 3) {
+      return str;
+    }
     return str.slice(0, 2) + str.slice(-2);
   }
   
