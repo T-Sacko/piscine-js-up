@@ -1,68 +1,38 @@
 function multiply(a, b) {
-    let res;
-    if (a == 0 || b == 0) {
-      res = 0;
-    } else {
-      if (b < 0) {
-        a = -a;
-        b = -b;
-      }
-      res = a + multiply(a, b - 1);
-    }
-    return res;
-  
+  let result = 0;
+  for (let i = 0; i < Math.abs(b); i++) {
+    result += a;
   }
-  
-  function divide(a, b) {
-    let res;
-    if (a === 0) {
-      res = 0;
-    } else if (b === 1) {
-      res = a;
-    } else if (b === -1) {
-      res = -a;
-    } else if (b === 0) {
-      return Infinity;
-    } else {
-      let neg;
-      if (a < 0) {
-        a = Math.abs(a);
-        neg = true;
-      }
-      if (b < 0) {
-        b = Math.abs(b);
-        neg ? (neg = false) : (neg = true);
-      }
-      let count = 0;
-      while (a >= b) {
-        a -= b;
-        count++;
-      }
-      res = neg ? -count : count;
-    }
-    return res;
+  return b < 0 ? -result : result;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    return null
   }
-  function modulo(a, b) {
-    let flag = false;
-    if (a < 0) {
-      a = -a;
-      flag = true;
-    }
-    if (b < 0) {
-      b = -b;
-    }
-    let answer = a;
-    let divisor = b;
-    let count = 1;
-    while (b < answer) {
-      answer = answer - divisor;
-      count++;
-    }
-    if (flag) {
-      answer = -answer;
-    }
-    return answer;
-    //   q = parseInt(a / b); //finding quotient (integer part only)
-    //   p = q * b; //finding product
-    //   return a - p; //finding modulus
+
+  let quotient = 0;
+  let temp = 0;
+  const sign = (a < 0) !== (b < 0) ? -1 : 1;
+  a = Math.abs(a);
+  b = Math.abs(b);
+
+  while (temp + b <= a) {
+    temp += b;
+    quotient++;
   }
+  return sign * quotient;
+}
+
+function modulo(a, b) {
+  if (b === 0) {
+    return null; 
+  }
+
+  let remainder = Math.abs(a);
+  b = Math.abs(b);
+  while (remainder >= b) {
+    remainder -= b;
+  }
+  return a < 0 ? -remainder : remainder;
+}
