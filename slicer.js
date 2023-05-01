@@ -4,10 +4,14 @@ function slice(input, start, end) {
 
   if (start < 0){
     start +=input.length
+  }else if(start===undefined) {
+    start=0
   }
 
   if (end<0){
     end+=input.length
+  } else if (end === undefined){
+    end = input.length
   }
 
   for (let i = start; i < end && i < input.length; i++) {
@@ -20,4 +24,4 @@ function slice(input, start, end) {
   
 }
 const ting = ['one','two', 'three', 'four', 'five']
-console.log(slice(ting,1,3))
+console.log(slice(ting,1))
