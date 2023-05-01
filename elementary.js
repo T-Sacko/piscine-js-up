@@ -21,11 +21,8 @@ function divide(a, b) {
     temp += b;
     quotient++;
   }
-  if (sign == true) {
-    return -quotient ;
-  }else{
-    return quotient
-  }
+  
+  return sign == true ? -quotient : quotient
 
 }
 
