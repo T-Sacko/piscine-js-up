@@ -13,7 +13,7 @@ function divide(a, b) {
 
   let quotient = 0;
   let temp = 0;
-  const sign = (a < 0) !== (b < 0) ? -1 : 1;
+  const sign = (a < 0) !== (b < 0)
   a = Math.abs(a);
   b = Math.abs(b);
 
@@ -21,7 +21,12 @@ function divide(a, b) {
     temp += b;
     quotient++;
   }
-  return sign * quotient;
+  if (sign == true) {
+    return -quotient ;
+  }else{
+    return quotient
+  }
+
 }
 
 function modulo(a, b) {
