@@ -11,7 +11,7 @@ function floor(num) {
 }
 
 function trunc(num) {
-  return num >= 0 ? integral(num) : integral(num - 1);
+  return num >= 0 ? integral(num) : integral(num);
 }
 
 function integral(num) {
@@ -24,3 +24,4 @@ function integral(num) {
   }
   return intPart * sign;
 }
+
