@@ -41,3 +41,5 @@ function isPast(date) {
     }
     return false;
 }
+
+console.log(new Date(2023,00,1).toDateString())

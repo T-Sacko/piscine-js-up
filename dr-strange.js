@@ -22,3 +22,5 @@ function addWeek(date) {
 function timeTravel(date) {
     return new Date(date.date.setHours(date.hour, date.minute, date.second));
 }
+
+console.l
