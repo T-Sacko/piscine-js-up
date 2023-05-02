@@ -23,13 +23,6 @@ function addWeek(date) {
     
 }
 
-const ting ={
-    date: new Date(2020,00,20),
-    hour: 20,
-    minute: 2,
-    second: 300
-}
-
 function timeTravel({date, hour, minute, second}) {
 
     return new Date(date.setHours(hour,minute,second)).toString()
