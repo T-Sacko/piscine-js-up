@@ -35,6 +35,3 @@ function timeTravel({date, hour, minute, second}) {
     return new Date(date.setHours(hour,minute,second)).toString()
 }
 
-console.log(timeTravel(ting))
-
-console.log(addWeek(0001-01-01))
