@@ -1,19 +1,20 @@
-function generateLetters() {
+export function generateLetters() {
+
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
     for (let i = 0; i < 120; i++) {
-        let letter = document.createElement("div");
-        letter.style.fontSize = `${11 + i}px`;
-        letter.textContent = String.fromCharCode(
-            65 + Math.floor(Math.random() * 26)
-        );
-        if (i < 40) {
-            letter.style.fontWeight = "300";
-        } else if (i < 80) {
-            letter.style.fontWeight = "400";
-        } else {
-            letter.style.fontWeight = "600";
-        }
-        document.getElementsByTagName("body")[0].appendChild(letter);
+        // create div element
+        const letterdiv = document.createElement('div')
+        // get random number from uppercase alphabet
+        const letter = alphabet[Math.floor(Math.random() * 26)]
+        // add letter to the div
+        letterdiv.textContent = letter
+        // det font size dynamically
+        letterdiv.style.fontSize = `${11 + i}`
+        // set font weight dynamically
+        letterdiv.style.fontWeight = i < 40 ? '300' : (i < 80 ? '400' : '600');
+        // add div to html body
+        document.body.appendChild(letterdiv);
     }
 }
 
-export { generateLetters };
