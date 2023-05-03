@@ -2,6 +2,15 @@ import { styles } from "./pimp-my-style.data.js";
 var counter = 0;
 
 function pimp() {
+
+    // var ting = document.querySelector(button.button)
+
+    // if (!ting.classList.contains("unpimp")) {
+    //     button.classList.add(styles[counter]) 
+    //     counter ++
+    // }
+    // if (counter == styles )
+    
     var button = document.querySelector("button.button");
     if (!button.classList.contains("unpimp")) {
         button.classList.add(styles[counter]);
@@ -19,3 +28,5 @@ function pimp() {
 }
 
 export { pimp };
+
+
