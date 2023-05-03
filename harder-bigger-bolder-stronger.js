@@ -10,7 +10,7 @@ export function generateLetters() {
         // add letter to the div
         letterdiv.textContent = letter
         // det font size dynamically
-        letterdiv.style.fontSize = `${11 + i}`
+        letterdiv.style.fontSize = `${11 + i}px`
         // set font weight dynamically
         letterdiv.style.fontWeight = i < 40 ? '300' : (i < 80 ? '400' : '600');
         // add div to html body
