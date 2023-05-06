@@ -1,10 +1,9 @@
-const words = input.trim().split(' ');
 const result = [];
-for (let i = 0; i < words.length; i++) {
-  const word = words[i];
+words.forEach((word) => {
   const halfLength = Math.ceil(word.length / 2);
   const firstHalf = word.slice(0, halfLength);
   const secondHalf = word.slice(halfLength);
-  result.push(secondHalf + firstHalf);
-}
+  const newWord = secondHalf + firstHalf;
+  result.push(newWord);
+});
 return result.join(' ');
