@@ -16,7 +16,7 @@ function generateColdShades() {
         if (
             color.match(/(aqua|blue|turquoise|green|cyan|navy|purple)/) !== null
         ) {
-            const div = document.createElement("div");
+            let div = document.createElement("div");
             div.classList.add(color);
             div.innerHTML = color;
             body.appendChild(div);
@@ -26,7 +26,7 @@ function generateColdShades() {
 
 function choseShade(shade) {
     document.querySelectorAll("div").forEach((div) => {
-        div.className = shade;
+        div.classList[0] = shade;
     });
 }
 
