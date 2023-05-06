@@ -20,15 +20,16 @@ function compose(e) {
       return;
     }
   
-    if (e.key.match(/[a-z]/)) {
-        let div = document.createElement('div')
-        let randomColor = `hsl(${Math.random() * 360}, 100%, 70%)`
-    
-        div.classList.add('note')
-        div.style.backgroundColor = randomColor
-        div.innerHTML = e.key.toUpperCase()
-        document.body.appendChild(div)
-      }
+    const keyChar = e.key.toLowerCase();
+  
+    // Check if the key is a lowercase letter
+    if (keyChar.charCodeAt(0) >= 97 && keyChar.charCodeAt(0) <= 122) {
+      const div = document.createElement('div');
+      div.classList.add('note');
+      div.innerHTML = keyChar;
+      div.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+      document.body.appendChild(div);
+    }
   }
 
 export { compose };
