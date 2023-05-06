@@ -25,9 +25,13 @@ function generateColdShades() {
 }
 
 function choseShade(shade) {
-    document.querySelectorAll("div").forEach((div) => {
-        div.classList[0] = shade;
-    });
+    const divs = document.querySelectorAll('div')
+
+    divs.forEach((div) => {
+        div.classList.replace(div.classList[0],shade)   
+
+    })
+    
 }
 
 export { generateClasses, generateColdShades, choseShade };
