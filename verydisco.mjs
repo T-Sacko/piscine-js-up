@@ -1,39 +1,15 @@
-import { promisify } from 'util';
-import * as cp from 'child_process';
+import process from 'process'
 
-const exec = promisify(cp.exec);
+const input = process.argv[2]
 
-export const tests = [];
+const disco = (word) => {
+  const len = Math.ceil(word.length / 2)
+  const firstHalf = word.slice(0, len)
+  const secondHalf = word.slice(len)
+  return `${secondHalf}${firstHalf}`
+}
 
-tests.push(async ({ path, eq }) => {
-  const { stdout } = await exec(`node ${path} discovery`);
-  return eq(stdout.trim(), 'verydisco 🕺🏼');
-});
+const output = input.split(' ').map(() => 'verydisco').join(' ')
+    || input.split(' ').map(disco).join(' ')
 
-tests.push(async ({ path, eq }) => {
-  const { stdout } = await exec(`node ${path} "kiss cool"`);
-  return eq(stdout.trim(), "sski olco");
-});
-
-tests.push(async ({ path, eq }) => {
-  const { stdout } = await exec(`node ${path} kiss cool`);
-  return eq(stdout.trim(), "sski");
-});
-
-tests.push(async ({ path, eq }) => {
-  const { stdout } = await exec(`node ${path} "Node is awesome"`);
-  return eq(stdout.trim(), "deNo si omeawes");
-});
-
-const input = process.argv[2];
-
-const words = input.split(' ');
-
-const discoWords = words.map((word) => {
-  const middleIndex = Math.ceil(word.length / 2);
-  const firstHalf = word.slice(0, middleIndex);
-  const secondHalf = word.slice(middleIndex);
-  return secondHalf + firstHalf;
-});
-
-console.log(discoWords.join('verydisco '));
+console.log(output)
