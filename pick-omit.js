@@ -25,15 +25,11 @@ function omit(obj, keys) {
         !keys.includes(key) && obj.hasOwnProperty(key) ? result[key] = obj[key] : null
     }
 
+    return result;
+
 }
 
-const obj = { a: 1, b: 2, c: 3 };
-const keys = ['a', 'c'];
 
-(() => {
-  const result = pick(obj, keys);
-  console.log(result);
-})();
 
 // function pick(obj, keys) {
 //     const picked = {};
