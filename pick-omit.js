@@ -28,6 +28,9 @@ function omit(obj, keys) {
     return result;
 
 }
+const f = ['ff','yhh','cuu']
+const t = ['ff','yhh','cuu']
+console.log(t.concat(f))
 
 
 

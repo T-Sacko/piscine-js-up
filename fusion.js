@@ -33,3 +33,12 @@ is.str = (n) => typeof n === "string";
 is.arr = (n) => Array.isArray(n);
 is.obj = (n) => typeof n === "object" && !is.fun(n) && !is.arr(n) && n !== null;
 is.fun = (n) => typeof n === "function";
+
+fusion( {
+     a: 1,
+     b: { c: "Salem" } 
+     } , {
+     a: 10,
+      x: [],
+      b: { c: "alem" }
+     })
