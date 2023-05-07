@@ -1,3 +1,6 @@
+import fs from 'fs/promises';
+
+
 const ting = process.argv[2];
 
 const words = ting.split(' ');
@@ -11,4 +14,4 @@ const changed = words.map(word => {
 });
 
 const result = changed.join(' ');
-console.log(result);
+fs.writeFile('verydisco-forever.txt', result)
