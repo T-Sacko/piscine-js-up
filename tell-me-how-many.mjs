@@ -1,14 +1,12 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-// Access the command line arguments and get the first argument (the directory path)
-const dirPath = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
+const folder = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
 
-// Read the contents of the directory
-fs.readdir(dirPath)
+fs.readdir(folder)
   .then(entries => {
-    const numberOfEntries = entries.length;
+    const num = entries.length;
 
     // Print the result in the console
-    console.log(numberOfEntries);
+    console.log(num);
   })
