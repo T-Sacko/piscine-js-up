@@ -15,10 +15,9 @@ fs.readdir(folder)
 
     names.sort();
 
-    names.forEach((name, index) => {
-      console.log(`${index + 1}. ${name}`);
+    names.slice(0, -1).forEach((name, index) => {
+      process.stdout.write(`${index + 1}. ${name}\n`);
     });
+    process.stdout.write(`${names.length}. ${names[names.length - 1]}`);
   })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+  
