@@ -1,53 +1,76 @@
 import http from 'http';
 import { join } from 'path';
-import { promises as fs } from 'fs';
+import { readFile, writeFile } from 'fs/promises';
 
-const port = 5000;
-const dirName = 'guests';
-const dirPath = join(process.cwd(), dirName);
 const authorizedUsers = {
   'Caleb_Squires': 'abracadabra',
   'Tyrique_Dalton': 'abracadabra',
   'Rahima_Young': 'abracadabra',
 };
 
-const server = http.createServer((req, res) => {
-  const { url, method, headers } = req;
-  const [path, auth] = headers.authorization ? headers.authorization.split(' ') : [];
+const directoryPath = 'guests';
 
-  if (url === '/favicon.ico') {
-    res.writeHead(204);
-    return res.end();
-  }
+function handlePostRequest(request, response) {
+  let body = '';
+  request.on('data', chunk => {
+    body += chunk.toString();
+  });
 
-  if (method === 'POST' && authorizedUsers[path.split('/')[1]] === auth) {
-    let body = '';
-
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
-
-    req.on('end', async () => {
-      const { answer, drink, food } = JSON.parse(body);
-      const guestName = path.slice(1);
-      const filePath = join(dirPath, `${guestName}.json`);
-
-      try {
-        await fs.writeFile(filePath, body);
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(body);
-      } catch (error) {
-        console.error(error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'server failed' }));
+  request.on('end', async () => {
+    try {
+      const { username, password } = request.auth;
+      if (!authorizedUsers[username] || authorizedUsers[username] !== password) {
+        response.statusCode = 401;
+        response.setHeader('Content-Type', 'application/json');
+        response.end(JSON.stringify({ error: 'Authorization Required' }));
+        return;
       }
-    });
-  } else {
-    res.writeHead(401, { 'Content-Type': 'application/json', 'WWW-Authenticate': 'Basic realm="Guest List Access"' });
-    res.end(JSON.stringify({ error: 'Unauthorized' }));
-  }
-});
 
+      const guestName = request.url.slice(1);
+      const filePath = join(directoryPath, `${guestName}.json`);
+      const guestData = JSON.parse(body);
+
+      await writeFile(filePath, JSON.stringify(guestData));
+
+      response.statusCode = 200;
+      response.setHeader('Content-Type', 'application/json');
+      response.end(JSON.stringify(guestData));
+    } catch (error) {
+      response.statusCode = 500;
+      response.setHeader('Content-Type', 'application/json');
+      response.end(JSON.stringify({ error: 'Server failed' }));
+      console.error(error);
+    }
+  });
+}
+
+function handleRequest(request, response) {
+  const { url, method, headers } = request;
+
+  if (method === 'POST') {
+    if (!headers.authorization) {
+      response.statusCode = 401;
+      response.setHeader('WWW-Authenticate', 'Basic realm="Authorization Required"');
+      response.setHeader('Content-Type', 'application/json');
+      response.end(JSON.stringify({ error: 'Authorization Required' }));
+      return;
+    }
+
+    const auth = headers.authorization.replace(/^Basic /, '');
+    const [username, password] = Buffer.from(auth, 'base64').toString().split(':');
+    request.auth = { username, password };
+
+    handlePostRequest(request, response);
+  } else {
+    response.statusCode = 404;
+    response.setHeader('Content-Type', 'application/json');
+    response.end(JSON.stringify({ error: 'Guest not found' }));
+  }
+}
+
+const server = http.createServer(handleRequest);
+
+const port = 5000;
 server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server listening on port ${port}`);
 });
