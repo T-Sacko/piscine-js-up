@@ -1,23 +1,25 @@
+// tell-me-who.mjs
 import fs from 'fs/promises';
-import path from 'path';
 
-const folder = process.argv[2] ? path.resolve(process.argv[2]) : process.cwd();
+const directoryPath = process.argv[2];
 
-fs.readdir(folder)
-  .then(async (entries) => {
-    const names = await Promise.all(
-      entries.map(async (entry) => {
-        const content = await fs.readFile(path.join(folder, entry), 'utf-8');
-        const guest = JSON.parse(content);
-        return `${guest.lastname} ${guest.firstname}`;
+async function printGuestNames() {
+  try {
+    const files = await fs.readdir(directoryPath);
+    const names = files
+      .filter(file => file.endsWith('.json'))
+      .map(file => {
+        const [firstName, lastName] = file.slice(0, -5).split('_');
+        return `${lastName} ${firstName}`;
       })
-    );
+      .sort();
 
-    names.sort();
-
-    names.slice(0, -1).forEach((name, index) => {
-      process.stdout.write(`${index + 1}. ${name}\n`);
+    names.forEach((name, index) => {
+      console.log(`${index + 1}. ${name}`);
     });
-    process.stdout.write(`${names.length}. ${names[names.length - 1]}`);
-  })
-  
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+printGuestNames();
